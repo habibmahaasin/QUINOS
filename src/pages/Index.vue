@@ -3,11 +3,11 @@
         <img
             alt="Vue logo"
             src="../assets/banner/promo-banner.png"
-            class="fixed inset-0 mx-auto max-w-md object-cover mt-16"
+            class="fixed inset-0 mx-auto w-full max-w-md object-cover mt-16"
             style="z-index: -1"
         />
     </div>
-    <div class="bg-white -mt-12 min-h-[100vh] z-20 relative lg:rounded-t-xl rounded-t-lg p-6">
+    <div class="bg-white -mt-[18vh] min-h-[100vh] z-20 relative lg:rounded-t-xl rounded-t-lg p-6">
         <MoleculeProfile name="Mahaasin" table="A-1" />
         <section class="mt-4">
             <div class="flex gap-2 max-w-full">
