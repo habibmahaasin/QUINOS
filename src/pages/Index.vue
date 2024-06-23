@@ -10,10 +10,10 @@
     <div class="bg-white -mt-12 min-h-[100vh] z-20 relative lg:rounded-t-xl rounded-t-lg p-6">
         <MoleculeProfile name="Mahaasin" table="A-1" />
         <section class="mt-4">
-            <div class="flex gap-2">
+            <div class="flex gap-2 max-w-full">
                 <label class="flex-1 input input-bordered flex items-center gap-4 py-0">
                     <FontAwesomeIcon :icon="faSearch" class="text-base" />
-                    <input type="text" class="grow" placeholder="Search category 1" />
+                    <input type="text" class="grow w-20" placeholder="Search category 1" />
                 </label>
                 <AtomsButton type="primary" @click="decrement">
                     <FontAwesomeIcon :icon="faListDots" class="text-base" />
