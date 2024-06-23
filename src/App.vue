@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <!-- <button @click="toggleTheme">Toggle Theme</button> -->
-        <div class="container mx-auto max-w-md bg-white min-h-[100vh]">
+        <div class="container mx-auto max-w-md bg-white min-h-[100vh] overflow-x-none">
             <OrganismTopBar />
             <router-view />
         </div>
