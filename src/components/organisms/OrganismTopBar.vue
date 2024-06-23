@@ -13,7 +13,7 @@ const props = defineProps({
 <template>
     <div class="navbar bg-base-100 fixed max-w-md z-40 px-6">
         <div class="flex-1">
-            <router-link to="/about">
+            <router-link to="/">
                 <FontAwesomeIcon :icon="faChevronLeft" class="text-lg" />
             </router-link>
         </div>
