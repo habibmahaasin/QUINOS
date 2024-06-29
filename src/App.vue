@@ -1,20 +1,22 @@
 <template>
     <div id="app">
-        <!-- <button @click="toggleTheme">Toggle Theme</button> -->
         <div class="container mx-auto max-w-md bg-white min-h-[100vh] overflow-x-none">
-            <OrganismTopBar v-if="showTopBar" />
+            <OrganismTopBar v-if="showNavigation" />
             <router-view />
+            <OrganismBottomNav v-if="showNavigation" />
         </div>
     </div>
 </template>
 
 <script>
+import OrganismBottomNav from "./components/organisms/OrganismBottomNav.vue";
 import OrganismTopBar from "./components/organisms/OrganismTopBar.vue";
 
 export default {
     name: "App",
     components: {
         OrganismTopBar,
+        OrganismBottomNav,
     },
     data() {
         return {
@@ -22,7 +24,7 @@ export default {
         };
     },
     computed: {
-        showTopBar() {
+        showNavigation() {
             return this.$route.path !== "/" && this.$route.path !== "/product-detail";
         },
     },
