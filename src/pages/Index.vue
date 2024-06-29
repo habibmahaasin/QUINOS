@@ -8,7 +8,7 @@
             style="z-index: -1"
         />
     </div>
-    <div class="bg-white -translate-y-12 min-h-[100vh] z-20 relative rounded-t-xl p-6">
+    <div class="bg-white -translate-y-16 min-h-[100vh] z-20 relative rounded-t-xl p-6">
         <MoleculeProfile name="Mahaasin" table="A-1" />
         <section class="mt-4 sticky top-24 bg-white pt-6 pb-2">
             <div class="flex gap-2 max-w-full">
