@@ -8,7 +8,7 @@
                     <p>Short description</p>
                     <p>{{ price }}</p>
                 </div>
-                <AtomsButton type="primary" class="w-full"> Add </AtomsButton>
+                <AtomsButton type="primary" class="w-full" @click="redirectToProduct"> Add </AtomsButton>
             </div>
         </div>
     </div>
@@ -16,6 +16,7 @@
 
 <script>
 import AtomsButton from "../atoms/AtomsButton.vue";
+import { useRouter } from "vue-router";
 
 export default {
     name: "MoleculeLargeCard",
@@ -31,6 +32,17 @@ export default {
             type: String,
             default: "IDR 100.000",
         },
+    },
+    setup() {
+        const router = useRouter();
+
+        const redirectToProduct = () => {
+            router.push("/product-detail");
+        };
+
+        return {
+            redirectToProduct,
+        };
     },
 };
 </script>

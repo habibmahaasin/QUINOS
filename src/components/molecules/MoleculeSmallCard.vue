@@ -6,13 +6,14 @@
                 <p class="font-bold">{{ name }}</p>
                 <p>{{ price }}</p>
             </div>
-            <AtomsButton type="primary"> Add </AtomsButton>
+            <AtomsButton type="primary" @click="redirectToProduct"> Add </AtomsButton>
         </div>
     </div>
 </template>
 
 <script>
 import AtomsButton from "../atoms/AtomsButton.vue";
+import { useRouter } from "vue-router";
 
 export default {
     name: "MoleculeSmallCard",
@@ -28,6 +29,17 @@ export default {
             type: String,
             default: "IDR 100.000",
         },
+    },
+    setup() {
+        const router = useRouter();
+
+        const redirectToProduct = () => {
+            router.push("/product-detail");
+        };
+
+        return {
+            redirectToProduct,
+        };
     },
 };
 </script>

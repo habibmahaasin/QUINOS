@@ -10,8 +10,9 @@
             />
         </div>
         <FontAwesomeIcon
+            @click="back"
             :icon="faChevronLeft"
-            class="z-20 rounded-[100%] bg-white px-3 py-2 text-black fixed top-4 ml-4 shadow-xl text-[18px]"
+            class="hover:cursor-pointer z-20 rounded-[100%] bg-white px-3 py-2 text-black fixed top-4 ml-4 shadow-xl text-[18px]"
         />
     </div>
     <div class="bg-white relative p-6">
@@ -108,7 +109,7 @@ const promoBanner = ref(null);
 
 const { bannerStyle } = useImageResize(promoBanner);
 
-const submit = () => {
+const back = () => {
     router.push("/home");
 };
 </script>
