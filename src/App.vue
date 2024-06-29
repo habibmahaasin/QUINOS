@@ -23,9 +23,10 @@ export default {
     },
     computed: {
         showTopBar() {
-            return this.$route.path !== "/";
+            return this.$route.path !== "/" && this.$route.path !== "/product-detail";
         },
     },
+
     methods: {
         toggleTheme() {
             this.theme = this.theme === "light" ? "dark" : "light";
