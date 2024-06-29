@@ -10,7 +10,7 @@
     </div>
     <div class="bg-white -translate-y-16 min-h-[100vh] z-20 relative rounded-t-xl p-6">
         <MoleculeProfile name="Mahaasin" table="A-1" />
-        <section class="mt-4 sticky top-24 bg-white pt-6 pb-2">
+        <section class="mt-4 sticky top-28 bg-white pt-6 pb-2">
             <div class="flex gap-2 max-w-full">
                 <label class="flex-1 input input-bordered flex items-center gap-4 py-0">
                     <FontAwesomeIcon :icon="faSearch" class="text-base" />
