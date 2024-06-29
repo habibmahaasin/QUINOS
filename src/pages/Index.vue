@@ -1,5 +1,6 @@
 <template>
-    <div class="relative max-w-md z-0 h-[480px] banner-bg">
+    <MoleculeCategoryModal modalId="category_modal" />
+    <div :style="bannerStyle" class="relative max-w-md z-0 banner-bg">
         <img
             alt="Vue logo"
             src="../assets/banner/promo-banner.png"
@@ -7,15 +8,15 @@
             style="z-index: -1"
         />
     </div>
-    <div class="bg-white -mt-[18vh] min-h-[100vh] z-20 relative lg:rounded-t-xl rounded-t-lg p-6">
+    <div class="bg-white -translate-y-12 min-h-[100vh] z-20 relative rounded-t-xl p-6">
         <MoleculeProfile name="Mahaasin" table="A-1" />
-        <section class="mt-4">
+        <section class="mt-4 sticky top-24 bg-white pt-6 pb-2">
             <div class="flex gap-2 max-w-full">
                 <label class="flex-1 input input-bordered flex items-center gap-4 py-0">
                     <FontAwesomeIcon :icon="faSearch" class="text-base" />
                     <input type="text" class="grow w-20" placeholder="Search category 1" />
                 </label>
-                <AtomsButton type="primary" @click="decrement">
+                <AtomsButton type="primary" onclick="category_modal.showModal()">
                     <FontAwesomeIcon :icon="faListDots" class="text-base" />
                 </AtomsButton>
             </div>
@@ -28,9 +29,9 @@
                 </template>
             </div>
         </section>
-        <section class="overflow-x-auto mt-6">
+        <section class="mt-6">
             <h4 class="text-[18px] font-bold mb-4">Trending</h4>
-            <div class="flex flex-nowrap gap-2">
+            <div class="flex flex-nowrap gap-2 overflow-x-auto">
                 <MoleculeSmallCard v-for="product in products" :name="product.name" :price="product.price" />
             </div>
         </section>
@@ -45,7 +46,7 @@
 
 <script setup>
 import { useCounterStore } from "../stores/counter";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import AtomsButton from "../components/atoms/AtomsButton.vue";
 import MoleculeProfile from "../components/molecules/MoleculeProfile.vue";
 import MoleculeSmallCard from "../components/molecules/MoleculeSmallCard.vue";
@@ -53,6 +54,11 @@ import MoleculeLargeCard from "../components/molecules/MoleculeLargeCard.vue";
 
 import { faSearch, faListDots } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useImageResize } from "../hooks/useImageResize";
+import MoleculeCategoryModal from "../components/molecules/MoleculeCategoryModal.vue";
+
+const promoBanner = ref(null);
+const { bannerStyle } = useImageResize(promoBanner);
 
 const counterStore = useCounterStore();
 const count = computed(() => counterStore.count);

@@ -1,5 +1,5 @@
 <template>
-    <div class="min-w-32">
+    <div class="min-w-36">
         <div class="flex flex-col gap-2">
             <img src="../../assets/product/product-1.png" alt="Vue logo" class="w-full" />
             <div class="text-[14px]">

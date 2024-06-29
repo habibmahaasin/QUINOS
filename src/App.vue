@@ -2,7 +2,7 @@
     <div id="app">
         <!-- <button @click="toggleTheme">Toggle Theme</button> -->
         <div class="container mx-auto max-w-md bg-white min-h-[100vh] overflow-x-none">
-            <OrganismTopBar />
+            <OrganismTopBar v-if="showTopBar" />
             <router-view />
         </div>
     </div>
@@ -20,6 +20,11 @@ export default {
         return {
             theme: "light",
         };
+    },
+    computed: {
+        showTopBar() {
+            return this.$route.path !== "/";
+        },
     },
     methods: {
         toggleTheme() {
