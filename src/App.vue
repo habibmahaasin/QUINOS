@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="container mx-auto max-w-md bg-white min-h-[100vh] overflow-x-none">
-            <OrganismTopBar v-if="showNavigation" />
+            <OrganismTopBar v-if="showTopNavigation" />
             <router-view />
             <OrganismBottomNav v-if="showNavigation" />
         </div>
@@ -24,8 +24,11 @@ export default {
         };
     },
     computed: {
-        showNavigation() {
+        showTopNavigation() {
             return this.$route.path !== "/" && this.$route.path !== "/product-detail";
+        },
+        showNavigation() {
+            return this.$route.path !== "/" && this.$route.path !== "/product-detail" && this.$route.path !== "/cart";
         },
     },
 
