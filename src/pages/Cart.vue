@@ -1,4 +1,5 @@
 <template>
+    <MoleculeCartModal modalId="cart_modal" />
     <div class="bg-white relative p-6">
         <section class="flex flex-col gap-4 pt-16 pb-2">
             <div class="flex flex-col gap-2">
@@ -23,7 +24,9 @@
                 <p class="text-xl font-bold">Total Amount</p>
                 <p class="text-base">IDR 11.100</p>
             </div>
-            <AtomsButton type="primary" class="w-full mt-2">Submit Order Now</AtomsButton>
+            <AtomsButton type="primary" class="w-full mt-2" onclick="cart_modal.showModal()"
+                >Submit Order Now</AtomsButton
+            >
             <div class="flex justify-center">
                 <h6>Powered by <b>QUINOS</b></h6>
             </div>
@@ -36,6 +39,7 @@ import { ref } from "vue";
 import AtomsButton from "../components/atoms/AtomsButton.vue";
 import MoleculeCartCard from "../components/molecules/MoleculeCartCard.vue";
 import MoleculeSmallCard from "../components/molecules/MoleculeSmallCard.vue";
+import MoleculeCartModal from "../components/molecules/MoleculeCartModal.vue";
 
 const orders = ref([
     { name: "Product's Name 1", price: "IDR 10.000", note: "Don't put sugar", qty: 1 },
