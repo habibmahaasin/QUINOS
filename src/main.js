@@ -8,19 +8,19 @@ import Landing from "./pages/Landing.vue";
 import ProductDetail from "./pages/ProductDetail.vue";
 import Bills from "./pages/Bills.vue";
 import Cart from "./pages/Cart.vue";
+import pinia from "./utils/plugins/persist";
 
 const app = createApp(App);
-const pinia = createPinia();
 
 const router = createRouter({
-    history: createWebHistory(),
-    routes: [
-        { path: "/", component: Landing },
-        { path: "/home", component: Index },
-        { path: "/product-detail", component: ProductDetail },
-        { path: "/bills", component: Bills },
-        { path: "/cart", component: Cart },
-    ],
+  history: createWebHistory(),
+  routes: [
+    { path: "/", component: Landing },
+    { path: "/home", component: Index },
+    { path: "/product-detail/:slug", component: ProductDetail },
+    { path: "/bills", component: Bills },
+    { path: "/cart", component: Cart },
+  ],
 });
 
 app.use(router);

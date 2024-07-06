@@ -1,17 +1,23 @@
 <template>
-    <div class="w-full">
-        <div class="flex flex-row gap-2">
-            <img src="../../assets/product/product-1.png" alt="Vue logo" class="w-32 flex-0" />
-            <div class="flex-1 flex flex-col gap-2 justify-between">
-                <div class="text-[16px]">
-                    <p class="font-bold">{{ name }}</p>
-                    <p>Short description</p>
-                    <p>{{ price }}</p>
-                </div>
-                <AtomsButton type="primary" class="w-full" @click="redirectToProduct"> Add </AtomsButton>
-            </div>
+  <div class="w-full">
+    <div class="flex flex-row gap-2">
+      <img
+        src="../../assets/product/product-1.png"
+        alt="Vue logo"
+        class="w-32 flex-0"
+      />
+      <div class="flex-1 flex flex-col gap-2 justify-between">
+        <div class="text-[16px]">
+          <p class="font-bold">{{ name }}</p>
+          <p>{{ desc }}</p>
+          <p>{{ formatPrice(price) }}</p>
         </div>
+        <AtomsButton type="primary" class="w-full" @click="redirectToProduct">
+          Add
+        </AtomsButton>
+      </div>
     </div>
+  </div>
 </template>
 
 <script>
@@ -19,30 +25,48 @@ import AtomsButton from "../atoms/AtomsButton.vue";
 import { useRouter } from "vue-router";
 
 export default {
-    name: "MoleculeLargeCard",
-    components: {
-        AtomsButton,
+  name: "MoleculeLargeCard",
+  components: {
+    AtomsButton,
+  },
+  props: {
+    name: {
+      type: String,
+      default: "New Product",
     },
-    props: {
-        name: {
-            type: String,
-            default: "New Product",
-        },
-        price: {
-            type: String,
-            default: "IDR 100.000",
-        },
+    price: {
+      type: Number,
+      default: 10000,
     },
-    setup() {
-        const router = useRouter();
+    desc: {
+      type: String,
+      default: "Short description",
+    },
+    url: {
+      type: String,
+      default: "/",
+    },
+  },
+  setup(props) {
+    const router = useRouter();
 
-        const redirectToProduct = () => {
-            router.push("/product-detail");
-        };
+    const redirectToProduct = () => {
+      router.push("/product-detail/" + props.url);
+    };
 
-        return {
-            redirectToProduct,
-        };
-    },
+    const formatPrice = (value) => {
+      const formatter = new Intl.NumberFormat("id-ID", {
+        style: "currency",
+        currency: "IDR",
+        minimumFractionDigits: 0,
+      });
+      return formatter.format(value);
+    };
+
+    return {
+      redirectToProduct,
+      formatPrice,
+    };
+  },
 };
 </script>
