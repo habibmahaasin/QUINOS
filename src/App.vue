@@ -27,7 +27,10 @@ export default {
   },
   computed: {
     showTopNavigation() {
-      return !this.$route.path.startsWith("/product-detail");
+      return (
+        !this.$route.path.startsWith("/product-detail") &&
+        this.$route.path !== "/"
+      );
     },
     showNavigation() {
       return (
