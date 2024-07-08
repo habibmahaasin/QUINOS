@@ -52,6 +52,7 @@
             class="input input-bordered w-full"
             v-model="customerData.phone"
             @input="updateCustomerData('phone')"
+            required
           />
         </label>
         <label class="form-control w-full">
@@ -64,6 +65,7 @@
             class="input input-bordered w-full"
             v-model="customerData.name"
             @input="updateCustomerData('name')"
+            required
           />
         </label>
         <AtomsButton type="primary" class="w-full mt-4"> Next </AtomsButton>

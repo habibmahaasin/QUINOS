@@ -63,37 +63,21 @@
                 v-if="addition.type == `multiple`"
                 type="checkbox"
                 class="checkbox"
+                :value="data.id"
+                @change="addAddition(data, addition)"
               />
               <input
                 v-if="addition.type == `single`"
                 type="radio"
                 name="radio-1"
                 class="radio"
+                :value="data.id"
+                @change="addAddition(data, addition)"
               />
             </div>
           </div>
         </div>
       </div>
-
-      <!-- <div class="flex flex-col gap-4">
-        <h1 class="text-xl font-bold">Protein</h1>
-        <div class="border-b-2 pb-4 border-dashed flex flex-col gap-4">
-          <div class="flex justify-between items-center">
-            <p class="text-base">Beef</p>
-            <div class="flex gap-2 items-center">
-              +2.000
-              <input type="radio" name="radio-1" class="radio" />
-            </div>
-          </div>
-          <div class="flex justify-between items-center">
-            <p class="text-base">Chicken</p>
-            <div class="flex gap-2 items-center">
-              +12.000
-              <input type="radio" name="radio-1" class="radio" />
-            </div>
-          </div>
-        </div>
-      </div> -->
       <div class="flex flex-col gap-4">
         <div class="border-b-2 pb-8 border-dashed flex flex-col gap-2">
           <div class="flex justify-between items-center">
@@ -129,23 +113,23 @@
           <AtomsButton type="primary" class="w-full py-[11px]"> + </AtomsButton>
         </div>
       </div>
-      <AtomsButton type="primary" class="w-full mt-4">
+      <button class="btn btn-primary" @click="updateCustomerOrder">
         Add to Cart
-      </AtomsButton>
+      </button>
     </section>
   </div>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { computed, ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
-import { useImageResize } from "../hooks/useImageResize"; // Adjust the import path as necessary
+import { useImageResize } from "../hooks/useImageResize";
 import AtomsButton from "../components/atoms/AtomsButton.vue";
-
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { PRODUCT_LIST } from "../utils/constant/productList";
 import { ADDITION_LIST } from "../utils/constant/additionList";
+import { useCustomerStore } from "../stores/customer";
 
 const router = useRouter();
 const route = useRoute();
@@ -154,13 +138,10 @@ const promoBanner = ref(null);
 const { bannerStyle } = useImageResize(promoBanner);
 
 const slug = route.params.slug;
-
 const productArray = PRODUCT_LIST.flatMap((category) =>
   category.product.filter((product) => product.slug === slug)
 );
-
 const selectedProduct = productArray[0];
-
 const additionData = selectedProduct.addition.flatMap((addition) => {
   return ADDITION_LIST.filter((add) => add.id === addition);
 });
@@ -172,6 +153,59 @@ const formatPrice = (value) => {
     minimumFractionDigits: 0,
   });
   return formatter.format(value);
+};
+
+const customerStore = useCustomerStore();
+const addOrder = customerStore.addOrder;
+
+const addition = ref([]);
+
+const addAddition = (value, type) => {
+  const additiondata = type.data.find((data) => data.id === value.id);
+
+  const mergeData = {
+    categoryName: type.name,
+    type: type.type,
+    additiondata,
+  };
+
+  if (type.type === "single") {
+    const existingIndex = addition.value.findIndex(
+      (data) => data.categoryName === type.name && data.type === "single"
+    );
+
+    if (existingIndex !== -1) {
+      addition.value[existingIndex] = mergeData;
+    } else {
+      addition.value.push(mergeData);
+    }
+  } else {
+    const existingIndex = addition.value.findIndex(
+      (data) => data.additiondata.id === value.id && data.type === "multiple"
+    );
+
+    if (existingIndex !== -1) {
+      addition.value.splice(existingIndex, 1);
+    } else {
+      addition.value.push(mergeData);
+    }
+  }
+};
+
+const updateCustomerOrder = () => {
+  addOrder({
+    id: selectedProduct.id,
+    name: selectedProduct.name,
+    price:
+      selectedProduct.discount == 0
+        ? selectedProduct.price
+        : selectedProduct.price -
+          (selectedProduct.price * selectedProduct.discount) / 100,
+    quantity: 1,
+    note: "",
+    addition: addition.value,
+  });
+  router.push("/home");
 };
 
 const back = () => {

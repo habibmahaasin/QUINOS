@@ -1,5 +1,28 @@
 <template>
   <MoleculeCategoryModal modalId="category_modal" />
+
+  <div
+    class="fixed bottom-[4rem] z-40 w-[100vw] max-w-md pb-2 bg-white"
+    v-if="customerData.order.length > 0"
+  >
+    <div class="w-full px-4 pt-2 flex">
+      <AtomsButton
+        @click="() => $router.push('/cart')"
+        class="py-4 max-w-md w-full"
+        type="primary"
+      >
+        <div class="flex justify-center items-center gap-1">
+          <p>Cart</p>
+          <div
+            class="relative flex items-center justify-center text-black w-6 h-6 rounded-[100%] bg-white text-[14px]"
+          >
+            {{ customerData.order.length }}
+          </div>
+        </div>
+      </AtomsButton>
+    </div>
+  </div>
+
   <div
     :style="bannerStyle"
     class="relative max-w-md z-0 banner-bg"
@@ -119,7 +142,6 @@ const scrollToCategory = (name) => {
 const promoBanner = ref(null);
 const { bannerStyle } = useImageResize(promoBanner);
 const customerStore = useCustomerStore();
-const setCustomerData = customerStore.setCustomerData;
 const customerData = computed(() => customerStore.data);
 </script>
 
