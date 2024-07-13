@@ -106,27 +106,24 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import AtomsButton from "../components/atoms/AtomsButton.vue";
 import MoleculeProfile from "../components/molecules/MoleculeProfile.vue";
 import MoleculeSmallCard from "../components/molecules/MoleculeSmallCard.vue";
 import MoleculeLargeCard from "../components/molecules/MoleculeLargeCard.vue";
-
 import { faSearch, faListDots } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useImageResize } from "../hooks/useImageResize";
 import MoleculeCategoryModal from "../components/molecules/MoleculeCategoryModal.vue";
+import { useCustomerData } from "../hooks/useCustomerData";
 
-import { PRODUCT_LIST } from "../utils/constant/productList";
-import { useCustomerStore } from "../stores/customer";
+const promoBanner = ref(null);
+const { bannerStyle } = useImageResize(promoBanner);
+const { customerData, trendingProducts, PRODUCT_LIST } = useCustomerData();
 
 const setSearch = (value) => {
   console.log(value);
 };
-
-const trendingProducts = PRODUCT_LIST.flatMap((category) =>
-  category.product.filter((product) => product.trending)
-);
 
 const scrollToCategory = (name) => {
   const categoryElement = document.getElementById(name);
@@ -138,11 +135,6 @@ const scrollToCategory = (name) => {
     });
   }
 };
-
-const promoBanner = ref(null);
-const { bannerStyle } = useImageResize(promoBanner);
-const customerStore = useCustomerStore();
-const customerData = computed(() => customerStore.data);
 </script>
 
 <style scoped>

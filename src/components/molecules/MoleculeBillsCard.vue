@@ -37,6 +37,7 @@
 <script>
 import { useRouter } from "vue-router";
 import AtomsButton from "../atoms/AtomsButton.vue";
+import usePricingFormat from "../../hooks/usePricingFormat";
 
 export default {
   name: "MoleculeBillsCard",
@@ -63,18 +64,10 @@ export default {
   },
   setup() {
     const router = useRouter();
+    const { formatPrice } = usePricingFormat();
 
     const redirectToProduct = () => {
       router.push("/product-detail");
-    };
-
-    const formatPrice = (value) => {
-      const formatter = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(value);
     };
 
     return {

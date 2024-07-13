@@ -61,13 +61,14 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import AtomsButton from "../components/atoms/AtomsButton.vue";
 import MoleculeBillsCard from "../components/molecules/MoleculeBillsCard.vue";
-import { useCustomerStore } from "../stores/customer";
+import usePricingFormat from "../hooks/usePricingFormat";
+import { useCustomerData } from "../hooks/useCustomerData";
 
-const customerStore = useCustomerStore();
-const customerData = computed(() => customerStore.data);
+const { formatPrice } = usePricingFormat();
+const { customerData } = useCustomerData();
 
 const orders = ref([...customerData.value.order]);
 const totalAmount = ref({
@@ -92,22 +93,6 @@ const calculateTotalAmount = () => {
 };
 
 calculateTotalAmount();
-
-const summary = ref({
-  subtotal: "75,000",
-  serviceCharge: "7,500",
-  pb1: "8,250",
-  table: "B-2",
-  total: "90,750",
-});
-
-const formatPrice = (value) => {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  }).format(value);
-};
 </script>
 
 <style scoped>

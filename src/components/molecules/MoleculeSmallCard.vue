@@ -16,6 +16,7 @@
 </template>
 
 <script>
+import usePricingFormat from "../../hooks/usePricingFormat";
 import AtomsButton from "../atoms/AtomsButton.vue";
 import { useRouter } from "vue-router";
 
@@ -40,18 +41,10 @@ export default {
   },
   setup(props) {
     const router = useRouter();
+    const { formatPrice } = usePricingFormat();
 
     const redirectToProduct = () => {
       router.push("/product-detail/" + props.url);
-    };
-
-    const formatPrice = (value) => {
-      const formatter = new Intl.NumberFormat("id-ID", {
-        style: "currency",
-        currency: "IDR",
-        minimumFractionDigits: 0,
-      });
-      return formatter.format(value);
     };
 
     return {

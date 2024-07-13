@@ -78,7 +78,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from "vue";
+import { ref } from "vue";
 import { useRouter } from "vue-router";
 import { useImageResize } from "../hooks/useImageResize";
 import AtomsButton from "../components/atoms/AtomsButton.vue";
@@ -89,22 +89,12 @@ import {
   faLocationDot,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-import { useCustomerStore } from "../stores/customer";
+import { useCustomerData } from "../hooks/useCustomerData";
 
 const router = useRouter();
 const promoBanner = ref(null);
 const { bannerStyle } = useImageResize(promoBanner);
-
-const customerStore = useCustomerStore();
-const setCustomerData = customerStore.setCustomerData;
-const customerData = computed(() => customerStore.data);
-
-const updateCustomerData = (key, value) => {
-  setCustomerData({
-    ...customerData.value,
-    [value]: customerData.value[value],
-  });
-};
+const { customerData, updateCustomerData } = useCustomerData();
 
 const submit = () => {
   router.push("/home");

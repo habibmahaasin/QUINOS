@@ -50,22 +50,19 @@
 </template>
 
 <script setup>
-import { computed, ref } from "vue";
+import { ref } from "vue";
 import AtomsButton from "../components/atoms/AtomsButton.vue";
 import MoleculeCartCard from "../components/molecules/MoleculeCartCard.vue";
 import MoleculeSmallCard from "../components/molecules/MoleculeSmallCard.vue";
 import MoleculeCartModal from "../components/molecules/MoleculeCartModal.vue";
-import { useCustomerStore } from "../stores/customer";
-import { PRODUCT_LIST } from "../utils/constant/productList";
+import usePricingFormat from "../hooks/usePricingFormat";
+import { useCustomerData } from "../hooks/useCustomerData";
 
-const customerStore = useCustomerStore();
-const customerData = computed(() => customerStore.data);
+const { formatPrice } = usePricingFormat();
+const { customerData, trendingProducts } = useCustomerData();
+
 const orders = ref([...customerData.value.order]);
 const totalAmount = ref(0);
-
-const trendingProducts = PRODUCT_LIST.flatMap((category) =>
-  category.product.filter((product) => product.trending)
-);
 
 const calculateTotalAmount = () => {
   totalAmount.value = orders.value.reduce(
@@ -86,14 +83,6 @@ const decreaseQty = (index) => {
     orders.value[index].quantity -= 1;
     calculateTotalAmount();
   }
-};
-
-const formatPrice = (value) => {
-  return new Intl.NumberFormat("id-ID", {
-    style: "currency",
-    currency: "IDR",
-    minimumFractionDigits: 0,
-  }).format(value);
 };
 </script>
 
