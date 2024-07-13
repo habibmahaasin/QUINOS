@@ -12,6 +12,8 @@
             :price="order.price"
             :note="order.note"
             :qty="order.quantity"
+            @increase-qty="increaseQty(index)"
+            @decrease-qty="decreaseQty(index)"
           />
         </div>
       </div>
@@ -23,15 +25,16 @@
         </div>
         <div class="flex flex-nowrap gap-2 overflow-x-auto">
           <MoleculeSmallCard
-            v-for="product in products"
+            v-for="product in trendingProducts"
             :name="product.name"
             :price="product.price"
+            :url="product.slug"
           />
         </div>
       </div>
       <div class="flex justify-between items-center mt-2">
         <p class="text-xl font-bold">Total Amount</p>
-        <p class="text-base">IDR 11.100</p>
+        <p class="text-base">{{ formatPrice(totalAmount) }}</p>
       </div>
       <AtomsButton
         type="primary"
@@ -53,59 +56,45 @@ import MoleculeCartCard from "../components/molecules/MoleculeCartCard.vue";
 import MoleculeSmallCard from "../components/molecules/MoleculeSmallCard.vue";
 import MoleculeCartModal from "../components/molecules/MoleculeCartModal.vue";
 import { useCustomerStore } from "../stores/customer";
+import { PRODUCT_LIST } from "../utils/constant/productList";
 
 const customerStore = useCustomerStore();
 const customerData = computed(() => customerStore.data);
-const orders = customerData.value.order;
+const orders = ref([...customerData.value.order]);
+const totalAmount = ref(0);
 
-// const orders = ref([
-//   {
-//     name: "Product's Name 1",
-//     price: "IDR 10.000",
-//     note: "Don't put sugar",
-//     qty: 1,
-//   },
-//   {
-//     name: "Product's Name 2",
-//     price: "IDR 20.000",
-//     note: "Extra spicy",
-//     qty: 2,
-//   },
-//   { name: "Product's Name 3", price: "IDR 15.000", note: "No salt", qty: 1 },
-//   {
-//     name: "Product's Name 4",
-//     price: "IDR 30.000",
-//     note: "Extra sauce",
-//     qty: 3,
-//   },
-// ]);
+const trendingProducts = PRODUCT_LIST.flatMap((category) =>
+  category.product.filter((product) => product.trending)
+);
 
-const products = [
-  {
-    name: "Product 1",
-    price: 100000,
-  },
-  {
-    name: "Product 2",
-    price: 100000,
-  },
-  {
-    name: "Product 3",
-    price: 100000,
-  },
-  {
-    name: "Product 4",
-    price: 100000,
-  },
-  {
-    name: "Product 5",
-    price: 100000,
-  },
-  {
-    name: "Product 6",
-    price: 100000,
-  },
-];
+const calculateTotalAmount = () => {
+  totalAmount.value = orders.value.reduce(
+    (sum, order) => sum + order.price * order.quantity,
+    0
+  );
+};
+
+calculateTotalAmount();
+
+const increaseQty = (index) => {
+  orders.value[index].quantity += 1;
+  calculateTotalAmount();
+};
+
+const decreaseQty = (index) => {
+  if (orders.value[index].quantity > 1) {
+    orders.value[index].quantity -= 1;
+    calculateTotalAmount();
+  }
+};
+
+const formatPrice = (value) => {
+  return new Intl.NumberFormat("id-ID", {
+    style: "currency",
+    currency: "IDR",
+    minimumFractionDigits: 0,
+  }).format(value);
+};
 </script>
 
 <style scoped>

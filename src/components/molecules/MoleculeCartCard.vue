@@ -12,9 +12,13 @@
           <p>{{ formatPrice(price) }}</p>
         </div>
         <div class="text-[16px] flex items-center gap-1">
-          <AtomsButton type="primary">-</AtomsButton>
+          <button class="btn btn-primary" @click="$emit('decrease-qty')">
+            -
+          </button>
           <p class="font-bold border border-1 px-3 py-1">{{ qty }}</p>
-          <AtomsButton type="primary">+</AtomsButton>
+          <button class="btn btn-primary" @click="$emit('increase-qty')">
+            +
+          </button>
         </div>
       </div>
     </div>

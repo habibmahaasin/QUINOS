@@ -82,7 +82,7 @@
         <div class="border-b-2 pb-8 border-dashed flex flex-col gap-2">
           <div class="flex justify-between items-center">
             <p class="text-base">Note</p>
-            <div class="flex gap-2 items-center">0/20</div>
+            <div class="flex gap-2 items-center">{{ notes.length }}/20</div>
           </div>
           <label class="input input-bordered flex items-center gap-2">
             <svg
@@ -97,20 +97,38 @@
                 fill="#707986"
               />
             </svg>
-            <input type="text" class="grow" placeholder="Example : no spicy" />
+            <input
+              type="text"
+              class="grow"
+              placeholder="Example : no spicy"
+              :value="notes"
+              @input="changeNotes($event.target.value)"
+            />
           </label>
         </div>
       </div>
       <div class="flex flex-col gap-4">
         <div class="flex items-center gap-2">
-          <AtomsButton type="primary" class="w-full py-[11px]"> - </AtomsButton>
+          <button
+            class="btn btn-primary py-[11px] w-3/12"
+            @click="changeQuantity('decrease')"
+          >
+            +
+          </button>
           <input
-            type="text"
+            type="number"
+            :max="selectedProduct.stock"
             placeholder="Total"
-            value="1"
+            :value="quantity"
+            @change="changeQuantity($event.target.value)"
             class="input input-bordered w-full text-center"
           />
-          <AtomsButton type="primary" class="w-full py-[11px]"> + </AtomsButton>
+          <button
+            class="btn btn-primary py-[11px] w-3/12"
+            @click="changeQuantity('increase')"
+          >
+            +
+          </button>
         </div>
       </div>
       <button class="btn btn-primary" @click="updateCustomerOrder">
@@ -138,42 +156,37 @@ const promoBanner = ref(null);
 const { bannerStyle } = useImageResize(promoBanner);
 
 const slug = route.params.slug;
-const productArray = PRODUCT_LIST.flatMap((category) =>
-  category.product.filter((product) => product.slug === slug)
+const selectedProduct = computed(() =>
+  PRODUCT_LIST.flatMap((category) => category.product).find(
+    (product) => product.slug === slug
+  )
 );
-const selectedProduct = productArray[0];
-const additionData = selectedProduct.addition.flatMap((addition) => {
-  return ADDITION_LIST.filter((add) => add.id === addition);
-});
+
+const additionData = computed(() =>
+  ADDITION_LIST.filter((add) => selectedProduct.value.addition.includes(add.id))
+);
 
 const formatPrice = (value) => {
-  const formatter = new Intl.NumberFormat("id-ID", {
+  return new Intl.NumberFormat("id-ID", {
     style: "currency",
     currency: "IDR",
     minimumFractionDigits: 0,
-  });
-  return formatter.format(value);
+  }).format(value);
 };
 
 const customerStore = useCustomerStore();
-const addOrder = customerStore.addOrder;
-
 const addition = ref([]);
+const quantity = ref(1);
+const notes = ref("");
 
 const addAddition = (value, type) => {
   const additiondata = type.data.find((data) => data.id === value.id);
-
-  const mergeData = {
-    categoryName: type.name,
-    type: type.type,
-    additiondata,
-  };
+  const mergeData = { categoryName: type.name, type: type.type, additiondata };
 
   if (type.type === "single") {
     const existingIndex = addition.value.findIndex(
       (data) => data.categoryName === type.name && data.type === "single"
     );
-
     if (existingIndex !== -1) {
       addition.value[existingIndex] = mergeData;
     } else {
@@ -183,7 +196,6 @@ const addAddition = (value, type) => {
     const existingIndex = addition.value.findIndex(
       (data) => data.additiondata.id === value.id && data.type === "multiple"
     );
-
     if (existingIndex !== -1) {
       addition.value.splice(existingIndex, 1);
     } else {
@@ -192,17 +204,49 @@ const addAddition = (value, type) => {
   }
 };
 
+const changeQuantity = (value) => {
+  if (value === "increase") {
+    if (quantity.value < selectedProduct.value.stock) {
+      quantity.value += 1;
+    } else {
+      quantity.value = selectedProduct.value.stock;
+    }
+  } else if (value === "decrease") {
+    if (quantity.value > 1) {
+      quantity.value -= 1;
+    }
+  } else {
+    if (parseInt(value) < 1) {
+      quantity.value = 1;
+    } else if (parseInt(value) > selectedProduct.value.stock) {
+      quantity.value = selectedProduct.value.stock;
+    } else {
+      quantity.value = parseInt(value);
+    }
+  }
+};
+
+const changeNotes = (value) => {
+  notes.value = value;
+};
+
 const updateCustomerOrder = () => {
-  addOrder({
-    id: selectedProduct.id,
-    name: selectedProduct.name,
+  const { id, name, price, discount } = selectedProduct.value;
+  customerStore.addOrder({
+    id,
+    name,
     price:
-      selectedProduct.discount == 0
-        ? selectedProduct.price
-        : selectedProduct.price -
-          (selectedProduct.price * selectedProduct.discount) / 100,
-    quantity: 1,
-    note: "",
+      discount === 0
+        ? price +
+          addition.value.reduce((acc, curr) => acc + curr.additiondata.price, 0)
+        : price -
+          (price * discount) / 100 +
+          addition.value.reduce(
+            (acc, curr) => acc + curr.additiondata.price,
+            0
+          ),
+    quantity: quantity.value,
+    note: notes.value === "" ? "-" : notes.value,
     addition: addition.value,
   });
   router.push("/home");
