@@ -40,15 +40,48 @@ export default {
       );
     },
   },
-
   methods: {
     toggleTheme() {
       this.theme = this.theme === "light" ? "dark" : "light";
       document.documentElement.setAttribute("data-theme", this.theme);
     },
+    checkCustomerStore() {
+      const customerStore = localStorage.getItem("customer-store");
+      if (!customerStore) {
+        this.$router.push("/");
+        return;
+      }
+
+      const customerData = JSON.parse(customerStore);
+      if (!customerData.data.name || !customerData.data.phone) {
+        this.$router.push("/");
+      }
+    },
+    redirectToHomeIfNeeded() {
+      const customerStore = localStorage.getItem("customer-store");
+      if (customerStore) {
+        const customerData = JSON.parse(customerStore);
+        if (
+          customerData.data.name &&
+          customerData.data.phone &&
+          this.$route.path === "/"
+        ) {
+          this.$router.push("/home");
+        }
+      }
+    },
   },
   mounted() {
     document.documentElement.setAttribute("data-theme", this.theme);
+    this.checkCustomerStore();
+    this.redirectToHomeIfNeeded();
+  },
+  watch: {
+    $route(to, from) {
+      if (to.path === "/") {
+        this.redirectToHomeIfNeeded();
+      }
+    },
   },
 };
 </script>
