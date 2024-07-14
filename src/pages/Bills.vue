@@ -56,7 +56,7 @@
           </div>
         </div>
       </div>
-      <RouterLink to="/" class="btn btn-primary w-full mt-4"
+      <RouterLink to="/payment" class="btn btn-primary w-full mt-4"
         >Payment/ Close the Bill</RouterLink
       >
       <div class="flex justify-center">

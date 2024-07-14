@@ -1,5 +1,4 @@
 import { createApp } from "vue";
-import { createPinia } from "pinia";
 import App from "./App.vue";
 import "./style.css";
 import { createRouter, createWebHistory } from "vue-router";
@@ -9,6 +8,8 @@ import ProductDetail from "./pages/ProductDetail.vue";
 import Bills from "./pages/Bills.vue";
 import Cart from "./pages/Cart.vue";
 import pinia from "./utils/plugins/persist";
+import Payment from "./pages/Payment.vue";
+import Invoice from "./pages/Invoice.vue";
 
 const app = createApp(App);
 
@@ -20,6 +21,9 @@ const router = createRouter({
     { path: "/product-detail/:slug", component: ProductDetail },
     { path: "/bills", component: Bills },
     { path: "/cart", component: Cart },
+    { path: "/payment", component: Payment },
+    { path: "/invoice", component: Invoice },
+    { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
 });
 

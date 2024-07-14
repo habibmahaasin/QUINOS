@@ -6,6 +6,7 @@ export const useCustomerStore = defineStore("customer", {
       name: "",
       phone: "",
       table: "A-1",
+      payment: "ovo",
       order: [],
     },
   }),
