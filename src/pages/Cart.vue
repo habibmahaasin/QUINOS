@@ -16,7 +16,13 @@
     </div>
   </MoleculeConfirmationModal>
   <div class="bg-white relative p-6">
-    <section class="flex flex-col gap-4 pt-16 pb-2">
+    <section
+      v-if="orders.length == 0"
+      class="flex items-center justify-center h-[100vh]"
+    >
+      <p>No orders have been added yet.</p>
+    </section>
+    <section class="flex flex-col gap-4 pt-16 pb-2" v-if="orders.length > 0">
       <div class="flex flex-col gap-2">
         <h1 class="text-xl font-bold">Cart</h1>
       </div>
@@ -97,6 +103,10 @@ const increaseQty = (index) => {
 const decreaseQty = (index) => {
   if (orders.value[index].quantity > 1) {
     orders.value[index].quantity -= 1;
+    calculateTotalAmount();
+  } else {
+    customerData.value.order.splice(index, 1);
+    orders.value = [...customerData.value.order];
     calculateTotalAmount();
   }
 };

@@ -1,6 +1,12 @@
 <template>
   <div class="bg-white relative p-6">
-    <section class="flex flex-col gap-4 pt-16 pb-16">
+    <section
+      v-if="orders.length == 0"
+      class="flex items-center justify-center h-[100vh]"
+    >
+      <p>No orders have been added yet.</p>
+    </section>
+    <section class="flex flex-col gap-4 pt-16 pb-16" v-if="orders.length > 0">
       <div class="flex flex-col gap-2">
         <h1 class="text-xl font-bold">Submitted Order List</h1>
         <h6 class="text-base text-gray-500">
@@ -17,8 +23,8 @@
             :qty="order.quantity"
           />
         </div>
-        <AtomsButton type="primary-outline" class="w-full mt-4"
-          >Add More Order</AtomsButton
+        <RouterLink to="/" class="btn btn-primary-outline w-full mt-4"
+          >Add More Order</RouterLink
         >
       </div>
       <div class="flex flex-col gap-4">
@@ -50,8 +56,8 @@
           </div>
         </div>
       </div>
-      <AtomsButton type="primary" class="w-full mt-2"
-        >Payment/ Close the Bill</AtomsButton
+      <RouterLink to="/" class="btn btn-primary w-full mt-4"
+        >Payment/ Close the Bill</RouterLink
       >
       <div class="flex justify-center">
         <h6>Powered by <b>QUINOS</b></h6>
@@ -62,7 +68,6 @@
 
 <script setup>
 import { ref } from "vue";
-import AtomsButton from "../components/atoms/AtomsButton.vue";
 import MoleculeBillsCard from "../components/molecules/MoleculeBillsCard.vue";
 import usePricingFormat from "../hooks/usePricingFormat";
 import { useCustomerData } from "../hooks/useCustomerData";
