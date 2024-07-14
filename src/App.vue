@@ -29,13 +29,13 @@ export default {
     showTopNavigation() {
       return (
         !this.$route.path.startsWith("/product-detail") &&
-        this.$route.path !== "/"
+        this.$route.path !== "/login"
       );
     },
     showNavigation() {
       return (
         !this.$route.path.startsWith("/product-detail") &&
-        this.$route.path !== "/" &&
+        this.$route.path !== "/login" &&
         this.$route.path !== "/cart"
       );
     },
@@ -48,12 +48,13 @@ export default {
     checkCustomerStore() {
       const customerStore = localStorage.getItem("customer-store");
       if (!customerStore) {
-        this.$router.push("/");
+        this.$router.push("/login");
         return;
       }
 
       const customerData = JSON.parse(customerStore);
       if (!customerData.data.name || !customerData.data.phone) {
+        console.log("customerData", customerData);
         this.$router.push("/");
       }
     },
@@ -64,9 +65,9 @@ export default {
         if (
           customerData.data.name &&
           customerData.data.phone &&
-          this.$route.path === "/"
+          this.$route.path === "/login"
         ) {
-          this.$router.push("/home");
+          this.$router.push("/");
         }
       }
     },
@@ -78,7 +79,7 @@ export default {
   },
   watch: {
     $route(to, from) {
-      if (to.path === "/") {
+      if (to.path === "/login") {
         this.redirectToHomeIfNeeded();
       }
     },

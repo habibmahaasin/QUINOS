@@ -15,8 +15,8 @@ const app = createApp(App);
 const router = createRouter({
   history: createWebHistory(),
   routes: [
-    { path: "/", component: Landing },
-    { path: "/home", component: Index },
+    { path: "/login", component: Landing },
+    { path: "/", component: Index },
     { path: "/product-detail/:slug", component: ProductDetail },
     { path: "/bills", component: Bills },
     { path: "/cart", component: Cart },

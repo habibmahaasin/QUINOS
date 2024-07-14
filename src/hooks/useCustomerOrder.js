@@ -102,7 +102,7 @@ export const useCustomerOrder = () => {
       note: notes.value === "" ? "-" : notes.value,
       addition: addition.value,
     });
-    router.push("/home");
+    router.push("/");
   };
 
   return {

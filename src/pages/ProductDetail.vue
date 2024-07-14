@@ -163,7 +163,7 @@ const {
 } = useCustomerOrder();
 
 const back = () => {
-  router.push("/home");
+  router.go(-1);
 };
 </script>
 

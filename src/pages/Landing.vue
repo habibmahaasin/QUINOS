@@ -97,6 +97,6 @@ const { bannerStyle } = useImageResize(promoBanner);
 const { customerData, updateCustomerData } = useCustomerData();
 
 const submit = () => {
-  router.push("/home");
+  router.push("/");
 };
 </script>
