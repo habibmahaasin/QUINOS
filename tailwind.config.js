@@ -27,7 +27,7 @@ export default {
             {},
         },
         ".btn-secondary": {
-          "@apply bg-gray-500 text-white hover:bg-gray-600": {},
+          "@apply bg-gray-200 text-black hover:bg-gray-400": {},
         },
         ".btn-success": {
           "@apply bg-green-500 text-white hover:bg-green-600": {},

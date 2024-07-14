@@ -67,36 +67,12 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
 import MoleculeBillsCard from "../components/molecules/MoleculeBillsCard.vue";
 import usePricingFormat from "../hooks/usePricingFormat";
-import { useCustomerData } from "../hooks/useCustomerData";
+import { useCustomerOrder } from "../hooks/useCustomerOrder";
 
 const { formatPrice } = usePricingFormat();
-const { customerData } = useCustomerData();
-
-const orders = ref([...customerData.value.order]);
-const totalAmount = ref({
-  subtotal: 0,
-  serviceCharge: 0,
-  pb1: 0,
-  table: customerData.value.table,
-  total: 0,
-});
-
-const calculateTotalAmount = () => {
-  totalAmount.value.subtotal = orders.value.reduce(
-    (sum, order) => sum + order.price * order.quantity,
-    0
-  );
-  totalAmount.value.serviceCharge = 5000;
-  totalAmount.value.pb1 = totalAmount.value.subtotal * 0.1;
-  totalAmount.value.total =
-    totalAmount.value.subtotal +
-    totalAmount.value.serviceCharge +
-    totalAmount.value.pb1;
-};
-
+const { orders, totalAmount, calculateTotalAmount } = useCustomerOrder();
 calculateTotalAmount();
 </script>
 

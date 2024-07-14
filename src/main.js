@@ -10,6 +10,7 @@ import Cart from "./pages/Cart.vue";
 import pinia from "./utils/plugins/persist";
 import Payment from "./pages/Payment.vue";
 import Invoice from "./pages/Invoice.vue";
+import PaymentMethod from "./pages/PaymentMethod.vue";
 
 const app = createApp(App);
 
@@ -22,6 +23,7 @@ const router = createRouter({
     { path: "/bills", component: Bills },
     { path: "/cart", component: Cart },
     { path: "/payment", component: Payment },
+    { path: "/payment/:slug", component: PaymentMethod },
     { path: "/invoice", component: Invoice },
     { path: "/:pathMatch(.*)*", redirect: "/" },
   ],

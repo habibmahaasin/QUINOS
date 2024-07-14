@@ -3,15 +3,39 @@ import { useRoute, useRouter } from "vue-router";
 import { useCustomerStore } from "../stores/customer";
 import { PRODUCT_LIST } from "../utils/constant/productList";
 import { ADDITION_LIST } from "../utils/constant/additionList";
+import { useCustomerData } from "./useCustomerData";
 
 export const useCustomerOrder = () => {
   const customerStore = useCustomerStore();
+  const { customerData } = useCustomerData();
   const router = useRouter();
   const addition = ref([]);
   const quantity = ref(1);
   const notes = ref("");
   const route = useRoute();
   const slug = route.params.slug;
+
+  const orders = ref([...customerData.value.order]);
+  const totalAmount = ref({
+    subtotal: 0,
+    serviceCharge: 0,
+    pb1: 0,
+    table: customerData.value.table,
+    total: 0,
+  });
+
+  const calculateTotalAmount = () => {
+    totalAmount.value.subtotal = orders.value.reduce(
+      (sum, order) => sum + order.price * order.quantity,
+      0
+    );
+    totalAmount.value.serviceCharge = 5000;
+    totalAmount.value.pb1 = totalAmount.value.subtotal * 0.1;
+    totalAmount.value.total =
+      totalAmount.value.subtotal +
+      totalAmount.value.serviceCharge +
+      totalAmount.value.pb1;
+  };
 
   const selectedProduct = computed(() =>
     PRODUCT_LIST.flatMap((category) => category.product).find(
@@ -106,6 +130,9 @@ export const useCustomerOrder = () => {
   };
 
   return {
+    orders,
+    totalAmount,
+    calculateTotalAmount,
     addition,
     quantity,
     notes,

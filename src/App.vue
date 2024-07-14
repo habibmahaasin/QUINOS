@@ -37,8 +37,8 @@ export default {
         !this.$route.path.startsWith("/product-detail") &&
         this.$route.path !== "/login" &&
         this.$route.path !== "/cart" &&
-        this.$route.path !== "/payment" &&
-        this.$route.path !== "/invoice"
+        this.$route.path !== "/invoice" &&
+        !this.$route.path.startsWith("/payment")
       );
     },
   },

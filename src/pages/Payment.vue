@@ -32,12 +32,19 @@
                 type="text"
                 class="input input-bordered w-full"
                 placeholder="Phone Number"
+                required
               />
             </div>
           </div>
         </div>
       </div>
-      <RouterLink to="/invoice" class="btn btn-primary w-full mt-4"
+      <RouterLink
+        :to="
+          customerData.payment != 'cashier'
+            ? '/payment/' + customerData.payment
+            : '/invoice'
+        "
+        class="btn btn-primary w-full mt-4"
         >Next</RouterLink
       >
     </section>
