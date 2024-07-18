@@ -60,7 +60,7 @@
         >Payment/ Close the Bill
         <FontAwesomeIcon
           :icon="faArrowAltCircleRight"
-          class="text-base text-[24px] absolute right-4 top-3"
+          class="text-[1.5rem] absolute right-4 top-3"
       /></RouterLink>
       <div class="flex justify-center">
         <h6>Powered by <b>QUINOS</b></h6>

@@ -20,7 +20,7 @@
         </div>
         <FontAwesomeIcon
           :icon="faArrowAltCircleRight"
-          class="text-base text-[24px] absolute right-4 top-4"
+          class="text-[1.5rem] absolute right-4 top-4"
         />
       </AtomsButton>
     </div>
