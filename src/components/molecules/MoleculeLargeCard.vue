@@ -8,7 +8,7 @@
       />
       <div class="flex-1 flex flex-col gap-2 justify-between">
         <div class="text-[16px]">
-          <p class="font-bold">{{ name }}</p>
+          <p class="font-bold line-clamp-1">{{ name }}</p>
           <p>{{ desc }}</p>
           <p>{{ formatPrice(price) }}</p>
         </div>

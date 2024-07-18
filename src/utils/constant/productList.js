@@ -192,7 +192,7 @@ export const PRODUCT_LIST = [
     product: [
       {
         id: 16,
-        name: "Product Padada dada fafaff",
+        name: "Product Padada dada fafaff Padada dada fafaff",
         slug: "product-p",
         desc: "Short Description",
         trending: false,
