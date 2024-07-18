@@ -25,6 +25,8 @@ const goBack = () => {
     router.push("/");
   } else if (route.path == "/payment") {
     router.push("/bills");
+  } else if (route.path == "/payment/*") {
+    router.push("/payment");
   } else {
     router.push(previousRoute.value);
   }

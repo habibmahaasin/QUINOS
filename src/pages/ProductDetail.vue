@@ -101,6 +101,7 @@
               type="text"
               class="grow"
               placeholder="Example : no spicy"
+              maxlength="20"
               :value="notes"
               @input="changeNotes($event.target.value)"
             />
@@ -110,10 +111,10 @@
       <div class="flex flex-col gap-4">
         <div class="flex items-center gap-2">
           <button
-            class="btn btn-primary py-[11px] w-3/12"
+            class="btn btn-primary-outline py-[11px] w-3/12"
             @click="changeQuantity('decrease')"
           >
-            +
+            -
           </button>
           <input
             type="number"

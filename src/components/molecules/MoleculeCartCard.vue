@@ -8,15 +8,25 @@
       />
       <div class="flex-1 flex items-center gap-2 justify-between">
         <div class="text-[16px] flex flex-col">
-          <p class="font-bold">{{ name }}</p>
+          <p class="font-bold line-clamp-1">{{ name }}</p>
           <p>{{ formatPrice(price) }}</p>
         </div>
-        <div class="text-[16px] flex items-center gap-1">
-          <button class="btn btn-primary" @click="$emit('decrease-qty')">
+        <div class="text-[16px] flex items-center gap-1 text-[12px]">
+          <button
+            class="btn btn-primary w-6 h-6 text-[12px] min-h-8 rounded-md"
+            @click="$emit('decrease-qty')"
+          >
             -
           </button>
-          <p class="font-bold border border-1 px-3 py-1">{{ qty }}</p>
-          <button class="btn btn-primary" @click="$emit('increase-qty')">
+          <p
+            class="font-bold border border-1 flex items-center justify-center min-w-8 px-1 py-[3px] rounded-md"
+          >
+            {{ qty }}
+          </p>
+          <button
+            class="btn btn-primary w-6 h-6 text-[12px] min-h-8 rounded-md"
+            @click="$emit('increase-qty')"
+          >
             +
           </button>
         </div>

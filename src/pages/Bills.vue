@@ -56,9 +56,12 @@
           </div>
         </div>
       </div>
-      <RouterLink to="/payment" class="btn btn-primary w-full mt-4"
-        >Payment/ Close the Bill</RouterLink
-      >
+      <RouterLink to="/payment" class="btn btn-primary w-full mt-4 relative"
+        >Payment/ Close the Bill
+        <FontAwesomeIcon
+          :icon="faArrowAltCircleRight"
+          class="text-base text-[24px] absolute right-4 top-3"
+      /></RouterLink>
       <div class="flex justify-center">
         <h6>Powered by <b>QUINOS</b></h6>
       </div>
@@ -70,6 +73,8 @@
 import MoleculeBillsCard from "../components/molecules/MoleculeBillsCard.vue";
 import usePricingFormat from "../hooks/usePricingFormat";
 import { useCustomerOrder } from "../hooks/useCustomerOrder";
+import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const { formatPrice } = usePricingFormat();
 const { orders, totalAmount, calculateTotalAmount } = useCustomerOrder();

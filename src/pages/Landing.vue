@@ -25,13 +25,28 @@
             0861-8291-8281
           </h1>
         </div>
-        <div class="flex gap-4 items-center">
-          <FontAwesomeIcon :icon="faClock" class="text-base" />
+        <div class="flex gap-4 items-start">
+          <FontAwesomeIcon :icon="faClock" class="text-base mt-1" />
           <div class="flex-1 flex justify-between">
-            <h1 class="text-[16px] font-light leading-[24px]">
-              Tuesday 9AM - 9PM
-            </h1>
-            <FontAwesomeIcon :icon="faChevronDown" class="text-base" />
+            <div class="collapse collapse-arrow -mt-4 -mb-4">
+              <input type="checkbox" />
+              <div
+                class="collapse-title !pl-0 pb-0 text-[16px] font-light leading-[24px]"
+              >
+                Tuesday 9AM - 9PM
+              </div>
+              <div
+                class="!pl-0 collapse-content pt-0 -mt-2 flex flex-col gap-2 mb-4"
+              >
+                <div
+                  class="flex justify-between items-center"
+                  v-for="items in schedule"
+                >
+                  <p>{{ items.day }}</p>
+                  <p>{{ items.time }}</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="flex gap-4">
@@ -95,6 +110,37 @@ const router = useRouter();
 const promoBanner = ref(null);
 const { bannerStyle } = useImageResize(promoBanner);
 const { customerData, updateCustomerData } = useCustomerData();
+
+const schedule = [
+  {
+    day: "Monday",
+    time: "9AM - 9PM",
+  },
+  {
+    day: "Tuesday",
+    time: "9AM - 9PM",
+  },
+  {
+    day: "Wednesday",
+    time: "9AM - 9PM",
+  },
+  {
+    day: "Thursday",
+    time: "9AM - 9PM",
+  },
+  {
+    day: "Friday",
+    time: "9AM - 9PM",
+  },
+  {
+    day: "Saturday",
+    time: "9AM - 9PM",
+  },
+  {
+    day: "Sunday",
+    time: "9AM - 9PM",
+  },
+];
 
 const submit = () => {
   router.push("/");
