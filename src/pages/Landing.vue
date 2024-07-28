@@ -105,6 +105,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useCustomerData } from "../hooks/useCustomerData";
+import { useHead } from "@vueuse/head";
 
 const router = useRouter();
 const promoBanner = ref(null);
@@ -145,4 +146,9 @@ const schedule = [
 const submit = () => {
   router.push("/");
 };
+
+useHead({
+  title: "Login",
+  meta: [{ name: "description", content: "description for Login Pages" }],
+});
 </script>

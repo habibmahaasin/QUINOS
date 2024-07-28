@@ -79,6 +79,7 @@ import usePricingFormat from "../hooks/usePricingFormat";
 import { useCustomerData } from "../hooks/useCustomerData";
 import { RouterLink } from "vue-router";
 import MoleculeConfirmationModal from "../components/molecules/MoleculeConfirmationModal.vue";
+import { useHead } from "@vueuse/head";
 
 const { formatPrice } = usePricingFormat();
 const { customerData, trendingProducts } = useCustomerData();
@@ -110,6 +111,11 @@ const decreaseQty = (index) => {
     calculateTotalAmount();
   }
 };
+
+useHead({
+  title: "Cart",
+  meta: [{ name: "description", content: "description for Cart Pages" }],
+});
 </script>
 
 <style scoped>

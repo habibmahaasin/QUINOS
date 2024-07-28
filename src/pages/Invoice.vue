@@ -119,6 +119,7 @@ import { ref } from "vue";
 import { useCustomerData } from "../hooks/useCustomerData";
 import usePricingFormat from "../hooks/usePricingFormat";
 import { useCustomerOrder } from "../hooks/useCustomerOrder";
+import { useHead } from "@vueuse/head";
 const { customerData } = useCustomerData();
 const { formatPrice } = usePricingFormat();
 const { orders, totalAmount, calculateTotalAmount } = useCustomerOrder();
@@ -150,6 +151,11 @@ const invoice_detail = ref([
     ],
   },
 ]);
+
+useHead({
+  title: "Invoice",
+  meta: [{ name: "description", content: "description for Invoice Pages" }],
+});
 </script>
 
 <style scoped>

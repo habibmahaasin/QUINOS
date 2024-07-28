@@ -52,6 +52,7 @@
 </template>
 
 <script setup>
+import { useHead } from "@vueuse/head";
 import { useCustomerData } from "../hooks/useCustomerData";
 import { PAYMENT_METHOD } from "../utils/constant/paymentMethod";
 const { customerData } = useCustomerData();
@@ -59,6 +60,11 @@ const { customerData } = useCustomerData();
 const getIconPath = (methodName) => {
   return new URL(`../assets/payment/${methodName}.png`, import.meta.url).href;
 };
+
+useHead({
+  title: "Payment",
+  meta: [{ name: "description", content: "description for Payment Pages" }],
+});
 </script>
 
 <style scoped>

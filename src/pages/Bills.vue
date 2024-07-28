@@ -75,10 +75,16 @@ import usePricingFormat from "../hooks/usePricingFormat";
 import { useCustomerOrder } from "../hooks/useCustomerOrder";
 import { faArrowAltCircleRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import { useHead } from "@vueuse/head";
 
 const { formatPrice } = usePricingFormat();
 const { orders, totalAmount, calculateTotalAmount } = useCustomerOrder();
 calculateTotalAmount();
+
+useHead({
+  title: "Bills",
+  meta: [{ name: "description", content: "description for Bills Pages" }],
+});
 </script>
 
 <style scoped>

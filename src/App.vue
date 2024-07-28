@@ -11,8 +11,10 @@
 </template>
 
 <script>
+import { useHead } from "@vueuse/head";
 import OrganismBottomNav from "./components/organisms/OrganismBottomNav.vue";
 import OrganismTopBar from "./components/organisms/OrganismTopBar.vue";
+import { useRoute } from "vue-router";
 
 export default {
   name: "App",
@@ -85,6 +87,29 @@ export default {
         this.redirectToHomeIfNeeded();
       }
     },
+  },
+  setup() {
+    // Use useHead from @vueuse/head
+    const route = useRoute();
+    useHead({
+      title: route.meta.title || "Default Title",
+      meta: [
+        {
+          name: "description",
+          content: route.meta.description || "Default description",
+        },
+      ],
+      link: [
+        {
+          rel: "icon",
+          href: "./assets/logo/favicon.ico", // Update with your icon path
+        },
+        {
+          rel: "apple-touch-icon",
+          href: "./assets/logo/subwa.svg", // Optional for Apple devices
+        },
+      ],
+    });
   },
 };
 </script>

@@ -28,6 +28,9 @@ export default {
           "bg-[#F1F1F1] text-black hover:bg-[#e0e0e0]":
             this.type === "secondary",
           "bg-red-500 text-white hover:bg-red-600": this.type === "danger",
+          "bg-transparent text-black hover:bg-gray-100 px-2":
+            this.type === "transparent",
+
           // Add more types as needed
         },
         {

@@ -147,6 +147,7 @@ import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import usePricingFormat from "../hooks/usePricingFormat";
 import { useCustomerOrder } from "../hooks/useCustomerOrder";
+import { useHead } from "@vueuse/head";
 
 const router = useRouter();
 const { formatPrice } = usePricingFormat();
@@ -166,6 +167,13 @@ const {
 const back = () => {
   router.go(-1);
 };
+
+useHead({
+  title: "Product - " + selectedProduct.value.name,
+  meta: [
+    { name: "description", content: "description for Product Details Pages" },
+  ],
+});
 </script>
 
 <style scoped>

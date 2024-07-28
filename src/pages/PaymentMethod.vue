@@ -1,38 +1,36 @@
 <template>
   <div class="bg-white relative p-6">
-    <section
-      class="flex flex-col gap-4 h-screen relative items-center justify-center"
-    >
-      <div
-        class="flex flex-col gap-6 items-center justify-center -translate-y-16"
-      >
-        <h1 class="text-xl font-bold">Payment Verification</h1>
-        <img src="../assets/payment/ovo.png" class="w-8" />
-        <p class="text-center text-sm w-10/12">
-          Click “Check Payment Status” to manually refresh your payment status
-          every 30 seconds. The maximum check time is 5 minutes or 300 seconds.
-        </p>
-        <p class="text-[#AC0000]">The remaining payment time is 04:40.</p>
-      </div>
-      <div class="absolute bottom-4 w-full">
-        <RouterLink to="/invoice" class="btn btn-secondary w-full my-1"
-          >Check Payment Status</RouterLink
-        >
-        <RouterLink to="/payment" class="btn btn-primary w-full my-1"
-          >Choose Method Payment</RouterLink
-        >
-        <div class="flex justify-center pt-8">
-          <h6>Powered by <b>QUINOS</b></h6>
-        </div>
-      </div>
-    </section>
+    <div v-if="payment == 'ovo'">
+      <OvoPaymentMethod />
+    </div>
+    <div v-else-if="payment == 'qris'">
+      <QrisPaymentMethod :totalAmount="totalAmount" />
+    </div>
+    <div v-else-if="payment == 'bank-permata' || payment == 'bank-bca'">
+      <BankPaymentMethod :totalAmount="totalAmount" :payment="payment" />
+    </div>
   </div>
 </template>
 
 <script setup>
+import OvoPaymentMethod from "../components/molecules/paymentMethod/Ovo.vue";
+import QrisPaymentMethod from "../components/molecules/paymentMethod/Qris.vue";
+import BankPaymentMethod from "../components/molecules/paymentMethod/Bank.vue";
 import { useCustomerData } from "../hooks/useCustomerData";
-import { PAYMENT_METHOD } from "../utils/constant/paymentMethod";
+import { useCustomerOrder } from "../hooks/useCustomerOrder";
+import { useHead } from "@vueuse/head";
 const { customerData } = useCustomerData();
+const { totalAmount, calculateTotalAmount } = useCustomerOrder();
+
+const payment = customerData.value.payment;
+
+useHead({
+  title: "Payment - " + payment,
+  meta: [
+    { name: "description", content: "description for Payment Method Pages" },
+  ],
+});
+calculateTotalAmount();
 </script>
 
 <style scoped>

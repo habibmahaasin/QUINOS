@@ -39,7 +39,8 @@
   </div>
 
   <div
-    class="bg-white -translate-y-16 min-h-[95vh] z-20 relative rounded-t-xl p-6 pb-24"
+    class="bg-white -translate-y-16 min-h-[95vh] z-20 relative rounded-t-xl p-6"
+    :class="customerData.order.length > 0 ? 'pb-24' : 'pb-8'"
   >
     <MoleculeProfile :name="customerData.name" :table="customerData.table" />
     <section class="mt-4 sticky top-28 bg-white pt-6 pb-2">
@@ -78,7 +79,6 @@
             @click="
               () => {
                 scrollToCategory(category.slug);
-                onChangeCategory(category.slug);
               }
             "
           >
@@ -95,7 +95,7 @@
         <img src="../assets/icon/not-found.svg" alt="Empty" class="h-auto" />
         <p class="leading-[18px]">
           Not Found<br />
-          <b>different word</b>
+          <b>Try different word</b>
         </p>
       </div>
     </div>
@@ -115,6 +115,8 @@
       v-for="category in products.value"
       :key="category.id"
       :id="category.slug"
+      ref="categoryRefs"
+      :data-slug="category.slug"
     >
       <h4 class="text-[18px] font-bold mb-4" v-if="products.onSearch == false">
         {{ category.name }}
@@ -134,7 +136,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import AtomsButton from "../components/atoms/AtomsButton.vue";
 import MoleculeProfile from "../components/molecules/MoleculeProfile.vue";
 import MoleculeSmallCard from "../components/molecules/MoleculeSmallCard.vue";
@@ -148,6 +150,7 @@ import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { useImageResize } from "../hooks/useImageResize";
 import MoleculeCategoryModal from "../components/molecules/MoleculeCategoryModal.vue";
 import { useCustomerData } from "../hooks/useCustomerData";
+import { useHead } from "@vueuse/head";
 
 const promoBanner = ref(null);
 const { bannerStyle } = useImageResize(promoBanner);
@@ -158,6 +161,8 @@ const products = ref({
   onSearch: false,
   value: PRODUCT_LIST,
 });
+
+const categoryRefs = ref([]);
 
 const onChangeCategory = (category) => {
   selectedCategory.value = category;
@@ -192,6 +197,37 @@ const scrollToCategory = (name) => {
     });
   }
 };
+
+const observeCategories = () => {
+  const options = {
+    root: null,
+    rootMargin: "-30% 0px 0px 0px",
+    threshold: 0.1,
+  };
+
+  const callback = (entries, observer) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        onChangeCategory(entry.target.dataset.slug);
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(callback, options);
+
+  categoryRefs.value.forEach((el) => {
+    observer.observe(el);
+  });
+};
+
+onMounted(() => {
+  observeCategories();
+});
+
+useHead({
+  title: "Home",
+  meta: [{ name: "description", content: "description for Home Pages" }],
+});
 </script>
 
 <style scoped>

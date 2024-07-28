@@ -21,12 +21,16 @@ onBeforeMount(() => {
 });
 
 const goBack = () => {
-  if (route.path == "/bills" || route.path == "/cart") {
+  const path = route.path;
+
+  if (path === "/bills" || path === "/cart") {
     router.push("/");
-  } else if (route.path == "/payment") {
+  } else if (path === "/payment") {
     router.push("/bills");
-  } else if (route.path == "/payment/*") {
+  } else if (path.startsWith("/payment/")) {
     router.push("/payment");
+  } else if (path.startsWith("/invoice")) {
+    router.push("/");
   } else {
     router.push(previousRoute.value);
   }
