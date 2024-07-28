@@ -6,7 +6,7 @@
       >
         <div
           class="flex flex-col gap-2 items-center mb-2"
-          v-if="customerData.payment == 'cashier'"
+          v-if="customerData.payment.method == 'cashier'"
         >
           <h1 class="text-xl font-bold w-8/12 text-center">
             Show This to The Cashier When Paying
@@ -15,7 +15,7 @@
         </div>
         <div
           class="flex flex-col gap-2 items-center mb-2"
-          v-if="customerData.payment != 'cashier'"
+          v-if="customerData.payment.method != 'cashier'"
         >
           <img src="../assets/icon/success.png" class="w-8/12" />
           <h1 class="text-2xl font-bold text-center mt-4">

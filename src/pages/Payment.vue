@@ -2,7 +2,7 @@
   <div class="bg-white relative p-6">
     <section class="flex flex-col gap-4 pt-16 pb-16">
       <div class="flex flex-col gap-2 border-b-2 pb-6 border-dashed">
-        <h1 class="text-xl font-bold">Choose Method Payment</h1>
+        <h1 class="text-xl font-bold">Choose Payment Method</h1>
       </div>
       <div
         class="flex flex-col gap-4"
@@ -18,22 +18,23 @@
                 name="radio-payment"
                 class="radio radio-success"
                 :value="method.slug"
-                v-model="customerData.payment"
-                :checked="method.slug == customerData.payment ? true : false"
+                v-model="customerData.payment.method"
               />
               <img :src="getIconPath(method.slug)" class="h-8" />
               <p class="text-base font-bold">{{ method.name }}</p>
             </div>
             <div
-              v-if="customerData.payment == 'ovo' && method.slug == 'ovo'"
+              v-if="
+                customerData.payment.method === 'ovo' && method.slug === 'ovo'
+              "
               class="mt-4"
             >
               <input
                 type="text"
                 class="input input-bordered w-full"
                 placeholder="Phone Number"
-                v-model="ovoNumber"
-                @input="onChangeOvoNumber"
+                v-model="customerData.payment.phone"
+                @input="updateCustomerData('payment.phone')"
                 required
               />
             </div>
@@ -42,8 +43,8 @@
       </div>
       <RouterLink
         :to="
-          customerData.payment != 'cashier'
-            ? '/payment/' + customerData.payment
+          customerData.payment.method !== 'cashier'
+            ? '/payment/' + customerData.payment.method
             : '/invoice'
         "
         class="btn btn-primary w-full mt-4"
@@ -57,26 +58,8 @@
 import { useHead } from "@vueuse/head";
 import { useCustomerData } from "../hooks/useCustomerData";
 import { PAYMENT_METHOD } from "../utils/constant/paymentMethod";
-import { ref } from "vue";
-const { customerData } = useCustomerData();
 
-const ovoNumber = ref("");
-
-const onChangeOvoNumber = (e) => {
-  let phone = e.target.value;
-  phone = phone.replace(/(?!^\+)\D/g, "");
-  if (phone.startsWith("0")) {
-    phone = "+62" + phone.substring(1);
-  }
-  if (!phone.startsWith("+62") && phone.startsWith("+")) {
-    phone = "+" + phone.substring(1, 16);
-  }
-  if (phone.length > 16) {
-    phone = phone.substring(0, 16);
-  }
-
-  ovoNumber.value = phone;
-};
+const { customerData, updateCustomerData } = useCustomerData();
 
 const getIconPath = (methodName) => {
   return new URL(`../assets/payment/${methodName}.png`, import.meta.url).href;
@@ -84,7 +67,7 @@ const getIconPath = (methodName) => {
 
 useHead({
   title: "Payment",
-  meta: [{ name: "description", content: "description for Payment Pages" }],
+  meta: [{ name: "description", content: "Description for Payment Pages" }],
 });
 </script>
 

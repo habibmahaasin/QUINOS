@@ -6,26 +6,32 @@ export const useCustomerStore = defineStore("customer", {
       name: "",
       phone: "",
       table: "A-1",
-      payment: "ovo",
+      payment: {
+        method: "ovo",
+        email: "",
+        phone: "",
+      },
       order: [],
     },
   }),
   actions: {
     setCustomerData(data) {
-      let phone = data.phone;
+      const formatPhone = (phone) => {
+        phone = phone.replace(/(?!^\+)\D/g, "");
+        if (phone.startsWith("0")) {
+          phone = "+62" + phone.substring(1);
+        }
+        if (!phone.startsWith("+62") && phone.startsWith("+")) {
+          phone = "+" + phone.substring(1, 16);
+        }
+        if (phone.length > 16) {
+          phone = phone.substring(0, 16);
+        }
+        return phone;
+      };
 
-      phone = phone.replace(/(?!^\+)\D/g, "");
-      if (phone.startsWith("0")) {
-        phone = "+62" + phone.substring(1);
-      }
-      if (!phone.startsWith("+62") && phone.startsWith("+")) {
-        phone = "+" + phone.substring(1, 16);
-      }
-      if (phone.length > 16) {
-        phone = phone.substring(0, 16);
-      }
-
-      data.phone = phone;
+      data.phone = formatPhone(data.phone);
+      data.payment.phone = formatPhone(data.payment.phone);
       this.data = data;
     },
     addOrder(order) {

@@ -22,7 +22,7 @@ import { useHead } from "@vueuse/head";
 const { customerData } = useCustomerData();
 const { totalAmount, calculateTotalAmount } = useCustomerOrder();
 
-const payment = customerData.value.payment;
+const payment = customerData.value.payment.method;
 
 useHead({
   title: "Payment - " + payment,
