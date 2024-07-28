@@ -12,6 +12,20 @@ export const useCustomerStore = defineStore("customer", {
   }),
   actions: {
     setCustomerData(data) {
+      let phone = data.phone;
+
+      phone = phone.replace(/(?!^\+)\D/g, "");
+      if (phone.startsWith("0")) {
+        phone = "+62" + phone.substring(1);
+      }
+      if (!phone.startsWith("+62") && phone.startsWith("+")) {
+        phone = "+" + phone.substring(1, 16);
+      }
+      if (phone.length > 16) {
+        phone = phone.substring(0, 16);
+      }
+
+      data.phone = phone;
       this.data = data;
     },
     addOrder(order) {
