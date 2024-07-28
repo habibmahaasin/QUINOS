@@ -32,6 +32,8 @@
                 type="text"
                 class="input input-bordered w-full"
                 placeholder="Phone Number"
+                v-model="ovoNumber"
+                @input="onChangeOvoNumber"
                 required
               />
             </div>
@@ -55,7 +57,26 @@
 import { useHead } from "@vueuse/head";
 import { useCustomerData } from "../hooks/useCustomerData";
 import { PAYMENT_METHOD } from "../utils/constant/paymentMethod";
+import { ref } from "vue";
 const { customerData } = useCustomerData();
+
+const ovoNumber = ref("");
+
+const onChangeOvoNumber = (e) => {
+  let phone = e.target.value;
+  phone = phone.replace(/(?!^\+)\D/g, "");
+  if (phone.startsWith("0")) {
+    phone = "+62" + phone.substring(1);
+  }
+  if (!phone.startsWith("+62") && phone.startsWith("+")) {
+    phone = "+" + phone.substring(1, 16);
+  }
+  if (phone.length > 16) {
+    phone = phone.substring(0, 16);
+  }
+
+  ovoNumber.value = phone;
+};
 
 const getIconPath = (methodName) => {
   return new URL(`../assets/payment/${methodName}.png`, import.meta.url).href;

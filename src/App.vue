@@ -58,7 +58,6 @@ export default {
 
       const customerData = JSON.parse(customerStore);
       if (!customerData.data.name || !customerData.data.phone) {
-        console.log("customerData", customerData);
         this.$router.push("/");
       }
     },
