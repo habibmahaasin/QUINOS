@@ -128,6 +128,7 @@
           :name="product.name"
           :price="product.price"
           :desc="product.desc"
+          :discount="product.discount"
           :url="product.slug"
         />
       </div>
