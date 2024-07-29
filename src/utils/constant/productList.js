@@ -106,7 +106,7 @@ export const PRODUCT_LIST = [
         desc: "Short Description",
         trending: false,
         price: 90000,
-        discount: 0,
+        discount: 50,
         stock: 10,
         addition: [1, 2],
       },
