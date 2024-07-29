@@ -20,6 +20,7 @@ export const useCustomerData = () => {
 
   return {
     customerData,
+    setCustomerData,
     updateCustomerData,
     trendingProducts,
     PRODUCT_LIST,

@@ -3,6 +3,10 @@ import { defineStore } from "pinia";
 export const useCustomerStore = defineStore("customer", {
   state: () => ({
     data: {
+      order_type: {
+        type: "Take Away",
+        time: "12:30 AM",
+      },
       name: "",
       phone: "",
       table: "A-1",
