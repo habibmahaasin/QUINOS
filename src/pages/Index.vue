@@ -1,7 +1,7 @@
 <template>
   <MoleculeCategoryModal modalId="category_modal" />
   <div
-    class="fixed bottom-[4rem] z-40 w-[100vw] max-w-md pb-2 bg-white"
+    class="fixed bottom-0 z-40 w-[100vw] max-w-md pb-2 bg-white"
     v-if="customerData.order.length > 0"
   >
     <div class="w-full px-4 pt-2 flex">
@@ -40,7 +40,7 @@
 
   <div
     class="bg-white -translate-y-16 min-h-[95vh] z-20 relative rounded-t-xl p-6"
-    :class="customerData.order.length > 0 ? 'pb-24' : 'pb-8'"
+    :class="customerData.order.length > 0 ? 'pb-8' : 'pb-2'"
   >
     <MoleculeProfile :name="customerData.name" :table="customerData.table" />
     <section class="mt-4 sticky top-28 bg-white pt-6 pb-2">

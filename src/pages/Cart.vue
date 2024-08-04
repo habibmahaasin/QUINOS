@@ -1,20 +1,5 @@
 <template>
-  <MoleculeConfirmationModal modalId="cart_modal"
-    ><div class="flex gap-2">
-      <RouterLink
-        to="/bills"
-        class="flex-1 ring ring-2 ring-inset ring-[#1AB394] text-[#08a384] hover:bg-[#08a384] hover:text-white hover:ring-0 flex items-center justify-center px-4 py-2 rounded-lg whitespace-nowrap"
-      >
-        Add More Order
-      </RouterLink>
-      <RouterLink
-        to="/"
-        class="flex-1 bg-[#1AB394] text-white hover:bg-[#08a384] flex items-center justify-center px-4 py-2 rounded-lg whitespace-nowrap"
-      >
-        Home
-      </RouterLink>
-    </div>
-  </MoleculeConfirmationModal>
+  <MoleculeInvoiceModal modalId="cart_modal"></MoleculeInvoiceModal>
   <div class="bg-white relative p-6">
     <section
       v-if="orders.length == 0"
@@ -53,15 +38,40 @@
           />
         </div>
       </div>
-      <div class="flex justify-between items-center mt-2">
-        <p class="text-xl font-bold">Total Amount</p>
-        <p class="text-base">{{ formatPrice(totalAmount) }}</p>
+      <div class="flex flex-col gap-4">
+        <h1 class="text-xl font-bold">Summary</h1>
+        <div class="border-b-2 pb-4 border-dashed flex flex-col gap-2">
+          <div class="flex justify-between items-center">
+            <p class="text-base">Subtotal</p>
+            <p class="text-base">{{ formatPrice(totalAmount.subtotal) }}</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <p class="text-base">Service Charge</p>
+            <p class="text-base">
+              {{ formatPrice(totalAmount.serviceCharge) }}
+            </p>
+          </div>
+          <div class="flex justify-between items-center">
+            <p class="text-base">PB1</p>
+            <p class="text-base">{{ formatPrice(totalAmount.pb1) }}</p>
+          </div>
+          <div class="flex justify-between items-center">
+            <p class="text-base">Table</p>
+            <p class="text-base">{{ totalAmount.table }}</p>
+          </div>
+          <div class="flex justify-between items-center mt-2">
+            <p class="text-xl font-bold">Total</p>
+            <p class="text-xl font-bold">
+              {{ formatPrice(totalAmount.total) }}
+            </p>
+          </div>
+        </div>
       </div>
       <AtomsButton
         type="primary"
         class="w-full mt-2"
         onclick="cart_modal.showModal()"
-        >Submit Order Now</AtomsButton
+        >Payment Method</AtomsButton
       >
       <div class="flex justify-center">
         <h6>Powered by <b>QUINOS</b></h6>
@@ -77,24 +87,16 @@ import MoleculeCartCard from "../components/molecules/MoleculeCartCard.vue";
 import MoleculeSmallCard from "../components/molecules/MoleculeSmallCard.vue";
 import usePricingFormat from "../hooks/usePricingFormat";
 import { useCustomerData } from "../hooks/useCustomerData";
-import { RouterLink } from "vue-router";
-import MoleculeConfirmationModal from "../components/molecules/MoleculeConfirmationModal.vue";
+import MoleculeInvoiceModal from "../components/molecules/MoleculeInvoiceModal.vue";
 import { useHead } from "@vueuse/head";
+import { useCustomerOrder } from "../hooks/useCustomerOrder";
 
 const { formatPrice } = usePricingFormat();
 const { customerData, trendingProducts } = useCustomerData();
+const { totalAmount, calculateTotalAmount } = useCustomerOrder();
+calculateTotalAmount();
 
 const orders = ref([...customerData.value.order]);
-const totalAmount = ref(0);
-
-const calculateTotalAmount = () => {
-  totalAmount.value = orders.value.reduce(
-    (sum, order) => sum + order.price * order.quantity,
-    0
-  );
-};
-
-calculateTotalAmount();
 
 const increaseQty = (index) => {
   orders.value[index].quantity += 1;

@@ -5,7 +5,6 @@ import { createRouter, createWebHistory } from "vue-router";
 import Index from "./pages/Index.vue";
 import Landing from "./pages/Landing.vue";
 import ProductDetail from "./pages/ProductDetail.vue";
-import Bills from "./pages/Bills.vue";
 import Cart from "./pages/Cart.vue";
 import pinia from "./utils/plugins/persist";
 import Payment from "./pages/Payment.vue";
@@ -33,10 +32,6 @@ const router = createRouter({
     {
       path: "/product-detail/:slug",
       component: ProductDetail,
-    },
-    {
-      path: "/bills",
-      component: Bills,
     },
     {
       path: "/cart",
