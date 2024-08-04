@@ -70,6 +70,7 @@
               onChangeCategory(`all`);
             }
           "
+          :id="'category_list_all'"
         >
           All
         </AtomsButton>
@@ -81,6 +82,7 @@
                 scrollToCategory(category.slug);
               }
             "
+            :id="'category_list_' + category.slug"
           >
             {{ category.name }}
           </AtomsButton>
@@ -167,6 +169,19 @@ const categoryRefs = ref([]);
 
 const onChangeCategory = (category) => {
   selectedCategory.value = category;
+  const categoryElement = document.getElementById("category_list_" + category);
+
+  if (categoryElement) {
+    const container = categoryElement.parentNode;
+    const containerWidth = container.clientWidth;
+    const elementLeft = categoryElement.offsetLeft;
+    const elementWidth = categoryElement.clientWidth;
+    const scrollLeft = elementLeft - containerWidth / 2 + elementWidth / 2;
+    container.scroll({
+      left: scrollLeft,
+      behavior: "smooth",
+    });
+  }
 };
 
 const setSearch = (value) => {
