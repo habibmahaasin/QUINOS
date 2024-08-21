@@ -10,6 +10,7 @@ import pinia from "./utils/plugins/persist";
 import Payment from "./pages/Payment.vue";
 import Invoice from "./pages/Invoice.vue";
 import PaymentMethod from "./pages/PaymentMethod.vue";
+import OrderProductDetail from "./pages/OrderProductDetail.vue";
 import { createHead } from "@vueuse/head";
 
 // Import Toastification
@@ -48,6 +49,10 @@ const router = createRouter({
     {
       path: "/invoice",
       component: Invoice,
+    },
+    {
+      path: "/order-detail/product/:id",
+      component: OrderProductDetail,
     },
     { path: "/:pathMatch(.*)*", redirect: "/" },
   ],
