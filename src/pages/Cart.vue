@@ -1,5 +1,20 @@
 <template>
-  <MoleculeInvoiceModal modalId="cart_modal"></MoleculeInvoiceModal>
+  <MoleculeConfirmationModal modalId="cart_modal"
+    ><div class="flex gap-2">
+      <RouterLink
+        to="/bills"
+        class="flex-1 ring ring-2 ring-inset ring-[#1AB394] text-[#08a384] hover:bg-[#08a384] hover:text-white hover:ring-0 flex items-center justify-center px-4 py-2 rounded-lg whitespace-nowrap"
+      >
+        Add More Order
+      </RouterLink>
+      <RouterLink
+        to="/"
+        class="flex-1 bg-[#1AB394] text-white hover:bg-[#08a384] flex items-center justify-center px-4 py-2 rounded-lg whitespace-nowrap"
+      >
+        Home
+      </RouterLink>
+    </div>
+  </MoleculeConfirmationModal>
   <div class="bg-white relative p-6">
     <section
       v-if="orders.length == 0"
@@ -88,7 +103,7 @@ import MoleculeCartCard from "../components/molecules/MoleculeCartCard.vue";
 import MoleculeSmallCard from "../components/molecules/MoleculeSmallCard.vue";
 import usePricingFormat from "../hooks/usePricingFormat";
 import { useCustomerData } from "../hooks/useCustomerData";
-import MoleculeInvoiceModal from "../components/molecules/MoleculeInvoiceModal.vue";
+import MoleculeConfirmationModal from "../components/molecules/MoleculeConfirmationModal.vue";
 import { useHead } from "@vueuse/head";
 import { useCustomerOrder } from "../hooks/useCustomerOrder";
 

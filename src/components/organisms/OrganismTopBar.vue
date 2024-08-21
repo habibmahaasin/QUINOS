@@ -23,10 +23,10 @@ onBeforeMount(() => {
 const goBack = () => {
   const path = route.path;
 
-  if (path === "/cart") {
+  if (path === "/bills" || path === "/cart") {
     router.push("/");
   } else if (path === "/payment") {
-    router.push("/cart");
+    router.push("/bills");
   } else if (path.startsWith("/payment/")) {
     router.push("/payment");
   } else if (path.startsWith("/invoice")) {

@@ -5,6 +5,7 @@
     >
       <OrganismTopBar v-if="showTopNavigation" />
       <router-view />
+      <OrganismBottomNav v-if="showNavigation" />
     </div>
   </div>
 </template>
@@ -31,6 +32,16 @@ export default {
       return (
         !this.$route.path.startsWith("/product-detail") &&
         this.$route.path !== "/login"
+      );
+    },
+    showNavigation() {
+      return (
+        !this.$route.path.startsWith("/product-detail") &&
+        this.$route.path !== "/login" &&
+        this.$route.path !== "/cart" &&
+        this.$route.path !== "/invoice" &&
+        !this.$route.path.startsWith("/payment") &&
+        !this.$route.path.startsWith("/order-detail/")
       );
     },
   },

@@ -16,6 +16,7 @@ import { createHead } from "@vueuse/head";
 // Import Toastification
 import Toast, { POSITION } from "vue-toastification";
 import "vue-toastification/dist/index.css";
+import Bills from "./pages/Bills.vue";
 
 const app = createApp(App);
 
@@ -49,6 +50,10 @@ const router = createRouter({
     {
       path: "/invoice",
       component: Invoice,
+    },
+    {
+      path: "/bills",
+      component: Bills,
     },
     {
       path: "/order-detail/product/:id",
