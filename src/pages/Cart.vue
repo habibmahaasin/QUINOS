@@ -58,7 +58,7 @@
         <div class="flex justify-between items-center">
           <p class="text-xl font-bold">Total Amount</p>
           <p class="text-xl font-bold">
-            {{ formatPrice(totalAmount.total) }}
+            {{ formatPrice(totalAmount.subtotal) }}
           </p>
         </div>
       </div>
@@ -101,11 +101,11 @@ const increaseQty = (index) => {
 const decreaseQty = (index) => {
   if (orders.value[index].quantity > 1) {
     orders.value[index].quantity -= 1;
-    calculateTotalAmount();
+    calculateTotalAmount(orders.value);
   } else {
     customerData.value.order.splice(index, 1);
     orders.value = [...customerData.value.order];
-    calculateTotalAmount();
+    calculateTotalAmount(orders.value);
   }
 };
 

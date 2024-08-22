@@ -24,8 +24,10 @@ export const useCustomerOrder = () => {
     total: 0,
   });
 
-  const calculateTotalAmount = () => {
-    totalAmount.value.subtotal = orders.value.reduce(
+  const calculateTotalAmount = (value) => {
+    const orders = value ? value : customerData.value.order;
+
+    totalAmount.value.subtotal = orders.reduce(
       (sum, order) => sum + order.price * order.quantity,
       0
     );
