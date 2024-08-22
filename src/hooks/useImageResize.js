@@ -5,25 +5,34 @@ export function useImageResize(promoBanner) {
     height: "480px",
   });
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   const updateImageHeight = () => {
     if (promoBanner.value) {
       bannerStyle.value.height = `${promoBanner.value.height}px`;
     }
+    scrollToTop();
   };
 
   onMounted(() => {
     if (promoBanner.value) {
       promoBanner.value.addEventListener("load", updateImageHeight);
       updateImageHeight();
+      scrollToTop();
     }
     window.addEventListener("resize", updateImageHeight);
+    scrollToTop();
   });
 
   onUnmounted(() => {
     if (promoBanner.value) {
       promoBanner.value.removeEventListener("load", updateImageHeight);
+      scrollToTop();
     }
     window.removeEventListener("resize", updateImageHeight);
+    scrollToTop();
   });
 
   return { bannerStyle };

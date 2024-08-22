@@ -30,7 +30,8 @@ export default {
     showTopNavigation() {
       return (
         !this.$route.path.startsWith("/product-detail") &&
-        this.$route.path !== "/login"
+        this.$route.path !== "/login" &&
+        !this.$route.path.startsWith("/order-detail/product/")
       );
     },
   },

@@ -1,16 +1,23 @@
 <template>
   <div class="w-full">
     <div class="flex flex-row gap-2">
-      <img
-        src="../../assets/product/product-1.png"
-        alt="Vue logo"
-        class="w-16 h-16 flex-0"
-      />
       <div class="flex-1 flex items-center gap-2 justify-between">
-        <div class="text-[16px] flex flex-col">
-          <p class="font-bold line-clamp-1">{{ name }}</p>
-          <p>{{ formatPrice(price) }}</p>
-        </div>
+        <RouterLink
+          :to="`/order-detail/product/${id}`"
+          class="flex gap-2 items-center flex-1"
+        >
+          <img
+            src="../../assets/product/product-1.png"
+            alt="Vue logo"
+            class="w-16 h-16 flex-0"
+          />
+          <div
+            class="flex-1 text-[16px] flex flex-col hover:text-primary cursor-pointer"
+          >
+            <p class="font-bold line-clamp-1">{{ name }}</p>
+            <p>{{ formatPrice(price) }}</p>
+          </div>
+        </RouterLink>
         <div class="text-[16px] flex items-center gap-1 text-[12px]">
           <button
             class="btn btn-primary w-6 h-6 text-[12px] min-h-8 rounded-md"
@@ -61,6 +68,10 @@ export default {
     AtomsButton,
   },
   props: {
+    id: {
+      type: Number,
+      default: 1,
+    },
     name: {
       type: String,
       default: "New Product",
