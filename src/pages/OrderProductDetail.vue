@@ -254,7 +254,7 @@ const changeNotes = (value) => {
 };
 
 const back = () => {
-  router.go(-1);
+  router.push("/cart");
 };
 
 useHead({
