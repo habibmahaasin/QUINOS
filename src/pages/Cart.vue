@@ -14,6 +14,7 @@
       <div class="flex flex-col gap-4 border-b-2 pb-8 border-dashed">
         <div v-for="(order, index) in orders" :key="index">
           <MoleculeCartCard
+            :id="index + 1"
             :name="order.name"
             :price="order.price"
             :note="order.note"
@@ -106,11 +107,11 @@ const increaseQty = (index) => {
 const decreaseQty = (index) => {
   if (orders.value[index].quantity > 1) {
     orders.value[index].quantity -= 1;
-    calculateTotalAmount();
+    calculateTotalAmount(orders.value);
   } else {
     customerData.value.order.splice(index, 1);
     orders.value = [...customerData.value.order];
-    calculateTotalAmount();
+    calculateTotalAmount(orders.value);
   }
 };
 

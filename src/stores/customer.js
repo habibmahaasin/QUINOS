@@ -41,6 +41,9 @@ export const useCustomerStore = defineStore("customer", {
     addOrder(order) {
       this.data.order.push(order);
     },
+    updateOrder(index, order) {
+      this.data.order[index] = order;
+    },
     removeOrder(index) {
       this.data.order.splice(index, 1);
     },

@@ -31,6 +31,8 @@ const goBack = () => {
     router.push("/payment");
   } else if (path.startsWith("/invoice")) {
     router.push("/");
+  } else if (path.startsWith("/order-detail/product")) {
+    router.push("/cart");
   } else {
     router.push(previousRoute.value);
   }
