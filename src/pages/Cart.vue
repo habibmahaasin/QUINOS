@@ -107,11 +107,11 @@ const increaseQty = (index) => {
 const decreaseQty = (index) => {
   if (orders.value[index].quantity > 1) {
     orders.value[index].quantity -= 1;
-    calculateTotalAmount();
+    calculateTotalAmount(orders.value);
   } else {
     customerData.value.order.splice(index, 1);
     orders.value = [...customerData.value.order];
-    calculateTotalAmount();
+    calculateTotalAmount(orders.value);
   }
 };
 
