@@ -55,32 +55,11 @@
         </div>
       </div>
       <div class="flex flex-col gap-4">
-        <h1 class="text-xl font-bold">Summary</h1>
-        <div class="border-b-2 pb-4 border-dashed flex flex-col gap-2">
-          <div class="flex justify-between items-center">
-            <p class="text-base">Subtotal</p>
-            <p class="text-base">{{ formatPrice(totalAmount.subtotal) }}</p>
-          </div>
-          <div class="flex justify-between items-center">
-            <p class="text-base">Service Charge</p>
-            <p class="text-base">
-              {{ formatPrice(totalAmount.serviceCharge) }}
-            </p>
-          </div>
-          <div class="flex justify-between items-center">
-            <p class="text-base">PB1</p>
-            <p class="text-base">{{ formatPrice(totalAmount.pb1) }}</p>
-          </div>
-          <div class="flex justify-between items-center">
-            <p class="text-base">Table</p>
-            <p class="text-base">{{ totalAmount.table }}</p>
-          </div>
-          <div class="flex justify-between items-center mt-2">
-            <p class="text-xl font-bold">Total</p>
-            <p class="text-xl font-bold">
-              {{ formatPrice(totalAmount.total) }}
-            </p>
-          </div>
+        <div class="flex justify-between items-center">
+          <p class="text-xl font-bold">Total Amount</p>
+          <p class="text-xl font-bold">
+            {{ formatPrice(totalAmount.total) }}
+          </p>
         </div>
       </div>
       <AtomsButton
